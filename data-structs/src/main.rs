@@ -55,4 +55,76 @@ fn main() {
     let rect3 = Rectangle::square(300);
     println!("{:?}", rect3);
     println!("{:?}", rect.can_hold(&rect2));
+
+    // ENUMS
+    let four = IpAddressKind::IPV4;
+    let six = IpAddressKind::IPV6;
+    // ENUMS WITH STRING
+    let four_str = IpAddressWithString::IPV4(String::from("127.0.0.1"));
+    let five_u8 = IpAddressWithString::IPV6(129, 11, 1);
+    let message = IpAddressWithString::MESSAGE { x: 8 };
+
+    // OPTION ENUM
+    let some_number = Some(6);
+    let some_int: Option<u8> = None;
+
+    let sum = 10 + some_number.unwrap_or(0);
+    println!("{}", sum);
+    // Pass a Enum inside an enum
+    value_in_cents(Coin::Nickel(State::Alabama));
+    // Using optional 
+    let five = Some(8);
+    let ans = plus_one(five);
+    // If let 
+    let some_value = Some(3);
+    if let Some(3) = some_value {
+        print!("Three");
+    }
 }
+
+enum IpAddressKind {
+    IPV4,
+    IPV6,
+}
+
+enum IpAddressWithString {
+    IPV4(String),
+    IPV6(u8, u8, u8),
+    MESSAGE { x: u8 },
+}
+
+impl IpAddressWithString {
+    fn print() {
+        println!("Hey there");
+    }
+}
+
+enum State {
+    Alaska,
+    Alabama,
+}
+
+enum Coin {
+    Penny,
+    Nickel(State),
+    Dime,
+}
+
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => 10,
+        Coin::Nickel(state){
+            println!("{}",state);
+            return 9; 
+        },
+        Coin::Dime => 20,
+    }
+}
+
+
+fn plus_one(x: Option<u8>) -> Option<u8> {
+    match  x {
+        Some(i) =>  Some(i+1),
+        None => None,
+    }
+} 
